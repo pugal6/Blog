@@ -8,13 +8,12 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Table(name = "posts")
 public class Post {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID postId;
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
     private String title;
     private String post;
