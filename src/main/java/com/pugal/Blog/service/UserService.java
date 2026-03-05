@@ -1,5 +1,6 @@
 package com.pugal.Blog.service;
 
+import com.pugal.Blog.entity.Post;
 import com.pugal.Blog.entity.User;
 import com.pugal.Blog.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class UserService {
     }
 
     public User getUserById(UUID id) {
-        return userRepo.findById(id).get();
+        return userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
+
+    public String deleteUser(UUID id) {
+        User user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        userRepo.delete(user);
+        return "User deleted";
+    }
+
 }

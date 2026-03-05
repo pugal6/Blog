@@ -5,12 +5,10 @@ import com.pugal.Blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class UserController {
@@ -19,7 +17,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("users")
-    public ResponseEntity<User> createUsers(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         userService.createUsers(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -28,5 +26,11 @@ public class UserController {
     public ResponseEntity<List<User>> getUsers() {
        List<User> users =  userService.getUsers();
        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @DeleteMapping("users/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") UUID id) {
+        String deleted = userService.deleteUser(id);
+        return new ResponseEntity<>(deleted, HttpStatus.OK);
     }
 }
